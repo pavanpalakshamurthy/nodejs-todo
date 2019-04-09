@@ -134,7 +134,7 @@ Run the application
 ```
 docker run -itd -p 3000:3000 -e mongoHost="<mongo-container-ip>" pavanp2/todo-node-app
 ```
-<mongo-container-ip> is from the step #4 of the previous section. Application is run as daemon.
+{mongo-container-ip} is from the step #4 of the previous section. Application is run as daemon.
 Logs of the application can be viwed using the below command
 ```
 docker logs <todo-node-app-container-id>
@@ -147,5 +147,9 @@ docker ps
 ```
 This should list both mongo instance and the todo app instance.
 
-
+### Accessing the application
+In the browser
+```
+localhost:3000
+```
 

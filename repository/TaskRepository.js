@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const MONGO_HOST = process.env.mongoHost || 'localhost';
-console.log(MONGO_HOST);
-const MONGO_PORT = process.env.mongoPort || 27017;
+const MONGO_HOST = process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost';
+const MONGO_PORT = process.env.MONGO_PORT_27017_TCP_PORT || 27017;
 const mongo_url = 'mongodb://' + MONGO_HOST + ':' + MONGO_PORT + '/todo?socketTimeoutMS=10000';
 
 mongoose.connect(mongo_url, { useNewUrlParser: true });
