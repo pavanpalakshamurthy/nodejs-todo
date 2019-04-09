@@ -28,6 +28,10 @@
 
 # Updates
 
+## Architecture
+![jpeg](https://github.com/pavanpalakshamurthy/nodejs-todo/blob/master/images/architecture.jpeg?raw=true 'todo app architecture')
+
+
 ## Mongo Integration
 Tasks added by the user is persisted in Mongo database. Any task marked as completed is updated accordingly in the database.
 
@@ -108,7 +112,7 @@ Logs of the mongo can be viwed using the below command
 docker logs mongo
 ```
 
-### Manually running the application
+### Manually running the todo application
 Step #1
 Build the image from the source code
 ```
