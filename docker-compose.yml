@@ -2,26 +2,17 @@ version: "3"
 services: 
   mongo:
     image: mongo:latest
-    volume:
-      todo-data: /data/db
-    restart: always
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+    volumes:
+      - todo-data:/data/db
+    restart: on-failure
 
-  todo:
-    image: pavanp2/todo-node-app
+  todoapp:
+    image: pavanp2/todo-node-app:latest
     ports:
-      "3000:3000"
+      - "3000:3000"
     depends_on:
-      mongo
-    links:
-      mongo:mongo
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
+      - mongo
+    restart: on-failure
         
-  volumes: 
-    todo-data:
+volumes: 
+  todo-data:
