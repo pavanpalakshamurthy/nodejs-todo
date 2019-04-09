@@ -26,6 +26,8 @@
 
 <p> I wrote a blog post on how to build this app, you can check it out <a href="https://medium.com/@atingenkay/creating-a-todo-app-with-node-js-express-8fa51f39b16f" target="_blank">Here</a>
 
+# Updates
+
 ## Mongo Integration
 Tasks added by the user is persisted in Mongo database. Any task marked as completed is updated accordingly in the database.
 
@@ -81,7 +83,7 @@ the container, we should be able to retrieve the IP of the mongo container as be
 docker inspect <mongo_container_id> | grep "IPAddress"
 ```
 
-### Running mongo instance
+### Manually running mongo instance
 Step #1
 Pull the latest mongo image from the dockerhub.
 ```
@@ -101,13 +103,12 @@ docker run -itd -v <volume-name>:/data/db mongo
 ```
 Now the mongo instance should be up and running and ready to accept connections.
 
-Step #4
-Run the inspect on the mongo container to determine the container IP address.
+Logs of the mongo can be viwed using the below command
 ```
-docker inspect <mongo-container-id> | grep "IPAddress"
+docker logs mongo
 ```
 
-### Running the application
+### Manually running the application
 Step #1
 Build the image from the source code
 ```
@@ -132,12 +133,15 @@ Recently built/pulled image should be visible in the list.
 Step #3
 Run the application
 ```
-docker run -itd -p 3000:3000 -e mongoHost="<mongo-container-ip>" pavanp2/todo-node-app
+docker run -itd -p --name todoapp 3000:3000 --link mongo:mongo pavanp2/todo-node-app
 ```
-{mongo-container-ip} is from the step #4 of the previous section. Application is run as daemon.
+-d switch runs the application in daemon mode.
+--link switch links containers running within the same network. By default both
+mongo instance and todo instance run on bridge network.
+
 Logs of the application can be viwed using the below command
 ```
-docker logs <todo-node-app-container-id>
+docker logs todoapp
 ```
 
 Step #4
@@ -153,3 +157,14 @@ In the browser
 localhost:3000
 ```
 
+### Docker compose
+Start the application
+Pulls images, creates volume & mounts, and runs both mongo and todo app containers in daemon mode
+```
+docker-compose up -d
+```
+
+Stop the application
+```
+docker-compose down -d
+```
