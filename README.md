@@ -31,6 +31,17 @@
 ## Architecture
 ![jpeg](https://github.com/pavanpalakshamurthy/nodejs-todo/blob/master/images/architecture.jpeg?raw=true 'todo app architecture')
 
+## Pre-requisites
+1. Docker version
+```
+Docker version 18.09.2, build 6247962
+```
+2. Docker compose version
+```
+docker-compose version 1.23.2, build 1110ad01
+```
+
+***Note: All development work done on macOS***
 
 ## Mongo Integration
 Tasks added by the user is persisted in Mongo database. Any task marked as completed is updated accordingly in the database.
