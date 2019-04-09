@@ -26,3 +26,51 @@
 
 <p> I wrote a blog post on how to build this app, you can check it out <a href="https://medium.com/@atingenkay/creating-a-todo-app-with-node-js-express-8fa51f39b16f" target="_blank">Here</a>
 
+## Mongo Integration
+Tasks added by the user is persisted in Mongo database. Any task marked as completed is updated accordingly in the database.
+
+Below is the schema of the collection
+```
+taskSchema : {
+    _id: <mongo_generated_id>,
+    name: String,
+    completed: Boolean
+}
+```
+
+Mongo instance is run inside a docker container on port 27017. Data is persisted on the host machine
+by specifying the volume while running the mongo container.
+
+```
+docker run -itd -v tododata:/data/db mongo
+```
+
+Here tododata is the docker volume created using the below command:
+```
+docker volume create tododata
+```
+
+## Todo-Node-App
+App has been updated to add/udpate the tasks to Mongo database. This application uses mongoose to perform save/update/find operations.
+
+Mongo host is read from the node environment variable mongoHost and mongoPort.
+Default values:
+```
+mongoHost = localhost
+mongoPort = 27017
+```
+
+This application is also run inside a docker container.
+
+Image of this application is built on top of Node image (OS + Node). Configuration for the same can be found in dockerfile.
+
+```
+git clone git@github.com:pavanpalakshamurthy/nodejs-todo.git
+cd nodejs-todo
+docker build . --tag pavanp2/todo-node-app:<version>
+```
+
+Latest image is available in dockerhub. The same can be pulled using the below command
+```
+docker pull pavanp2/todo-node-app
+```
