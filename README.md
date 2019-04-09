@@ -74,3 +74,78 @@ Latest image is available in dockerhub. The same can be pulled using the below c
 ```
 docker pull pavanp2/todo-node-app
 ```
+
+Before running the application, Mongo docker instance should be up and running. By inspecting
+the container, we should be able to retrieve the IP of the mongo container as below
+```
+docker inspect <mongo_container_id> | grep "IPAddress"
+```
+
+### Running mongo instance
+Step #1
+Pull the latest mongo image from the dockerhub.
+```
+docker pull mongo
+```
+
+Step #2
+Create volume on the host machine
+```
+docker volume create <volume-name>
+```
+
+Step #3
+Run the mongo container
+```
+docker run -itd -v <volume-name>:/data/db mongo
+```
+Now the mongo instance should be up and running and ready to accept connections.
+
+Step #4
+Run the inspect on the mongo container to determine the container IP address.
+```
+docker inspect <mongo-container-id> | grep "IPAddress"
+```
+
+### Running the application
+Step #1
+Build the image from the source code
+```
+git clone git@github.com:pavanpalakshamurthy/nodejs-todo.git
+cd nodejs-todo
+docker build . --tag pavanp2/todo-node-app:<version>
+```
+
+Step #1.1 (if Step #1 not executed)
+Pull the todo node app image directly from dockerhub
+```
+docker pull pavanp2/todo-node-app:latest
+```
+
+Step #2
+List all the images available locally. 
+```
+docker images
+```
+Recently built/pulled image should be visible in the list.
+
+Step #3
+Run the application
+```
+docker run -itd -p 3000:3000 -e mongoHost="<mongo-container-ip>" pavanp2/todo-node-app
+```
+<mongo-container-ip> is from the step #4 of the previous section. Application is run as daemon.
+Logs of the application can be viwed using the below command
+```
+docker logs <todo-node-app-container-id>
+```
+
+Step #4
+View all the running containers
+```
+docker ps
+```
+This should list both mongo instance and the todo app instance.
+
+
+
